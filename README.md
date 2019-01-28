@@ -1,0 +1,1 @@
+# boostcampts-menu_random_choice_style_guide
