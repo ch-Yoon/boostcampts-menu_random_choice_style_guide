@@ -24,55 +24,49 @@
 - `public static final String EXTRA_NAME = "EXTRA_NAME";`
 - `public static final String PREF_LOGIN_TOKEN = "PREF_LOGIN_TOKEN";`
     
-#### Fragment
-- Fragment에 ARGUMENT_를 넣어주는 경우, 해당 Fragment에 newInstance()를 구현하고 이를 사용한다.
-- Fragment 생성자의 Parameter로 넘기지 않는다.    
-public static UserFragment newInstance(User user) {    
-&nbsp;&nbsp;&nbsp;&nbsp;UserFragment fragment = new UserFragment();            
-&nbsp;&nbsp;&nbsp;&nbsp;Bundle args = new Bundle();    
-&nbsp;&nbsp;&nbsp;&nbsp;args.putParcelable(ARGUMENT_USER, user);    
-&nbsp;&nbsp;&nbsp;&nbsp;fragment.setArguments(args)    
-&nbsp;&nbsp;&nbsp;&nbsp;return fragment;    
-}
-
-
-
 #### Line
 - 1줄에 100자를 넘지 않도록 작성한다.
 - 코드간의 간격은 2줄이상 간격이 발생하지 않도록 한다.(최대 1줄 줄바꿈)
 
 - Parameter
 Parameter개수가 많아서 줄바꿈이 필요한 경우, `,`다음부터 줄바꿈한다.    
+```java
 public InputSingleTextView(Context context,      
-&nbsp;&nbsp;&nbsp;&nbsp;@RegisterStep String step,    
-&nbsp;&nbsp;&nbsp;&nbsp;String hint,    
-&nbsp;&nbsp;&nbsp;&nbsp;String validationMessage,    
-&nbsp;&nbsp;&nbsp;&nbsp;@NonNull CompleteListener completeListener) {      
-&nbsp;&nbsp;&nbsp;&nbsp;...    
+                           @RegisterStep String step,    
+                           String hint,    
+                           String validationMessage,    
+                           @NonNull CompleteListener completeListener) {      
+                           ...    
+                           
 }     
+```
 
 
 - 줄바꿈이 필요한 부분부터 줄바꿈 하지 않고 위의 예시처럼 1개 단위로 줄바꿈을 해준다. 호출코드에서도 동일.
+```java
 new InputSingleTextView(this,    
-&nbsp;&nbsp;&nbsp;&nbsp;RegisterStep.XXX,    
-&nbsp;&nbsp;&nbsp;&nbsp;getString(R.string.xxx),    
-&nbsp;&nbsp;&nbsp;&nbsp;getString(R.string.xxx),    
-&nbsp;&nbsp;&nbsp;&nbsp;completeListener);
-   
+                        RegisterStep.XXX,    
+                        getString(R.string.xxx),    
+                        getString(R.string.xxx),    
+                        completeListener);
+```
 - Operator
 많은 operator의 연산으로 줄바꿈이 필요한 경우, operator 전에 줄바꿈한다.    
+```java
 int longName = anotherVeryLongVariable + anEvenLongerOne - thisRidiculousLongOne    
         + theFinalOne;     
+```
 연산자의 경우는 줄바꿈이 필요한 위치부터 줄바꿈한다.    
 
 
 - Method chain
-Builder/RxJava 등 여러 함수를 chaining으로 사용하면서 줄바꿈이 필요한 경우, .전에 줄바꿈한다.    
+Builder/RxJava 등 여러 함수를 chaining으로 사용하면서 줄바꿈이 필요한 경우, .전에 줄바꿈한다.   
+```java
 ImageLoader.load(user.getProfileUrl())      
-        .placeholder(R.drawable.img_user_placeholder)      
-        .fitCenter()      
-        .into(binding.ivUser);    
-   
+           .placeholder(R.drawable.img_user_placeholder)      
+           .fitCenter()      
+           .into(binding.ivUser);    
+```
 
 #### 새파일 생성시 주석
 새로운 파일을 만들때 자동으로 만들어지는 주석은 만들지 않는다.    
@@ -81,20 +75,16 @@ ImageLoader.load(user.getProfileUrl())
 
 #### Annotation    
 외부에서 호출할 수 있는 public 함수에서는 항상 @NonNull / @Nullable 어노테이션을 추가해준다.    
+```java
 public RegisterStepManager(@NonNull RegisterContract.View view,    
-&nbsp;&nbsp;&nbsp;&nbsp;@NonNull Activity activity,    
-&nbsp;&nbsp;&nbsp;&nbsp;@NonNull RegisterContract.Presenter presenter,    
-&nbsp;&nbsp;&nbsp;&nbsp;@NonNull ActivityRegisterBinding binding,    
-&nbsp;&nbsp;&nbsp;&nbsp;@NonNull String registerHashId) {    
-&nbsp;&nbsp;&nbsp;&nbsp;this.view = view;    
-&nbsp;&nbsp;&nbsp;&nbsp;this.activity = activity;     
-&nbsp;&nbsp;&nbsp;&nbsp;this.presenter = presenter;     
-&nbsp;&nbsp;&nbsp;&nbsp;this.binding = binding;     
-&nbsp;&nbsp;&nbsp;&nbsp;this.registerHashId.set(registerHashId);     
-&nbsp;&nbsp;&nbsp;&nbsp;binding.setIsLoading(isLoading);     
-&nbsp;&nbsp;&nbsp;&nbsp;setMessageRecyclerView();     
-&nbsp;&nbsp;&nbsp;&nbsp;setListener();    
+                           @NonNull Activity activity,    
+                           @NonNull RegisterContract.Presenter presenter,    
+                           @NonNull ActivityRegisterBinding binding,    
+                           @NonNull String registerHashId) {    
+                           ...
+                           ...
 }     
+```
     
 #### Util   
 public static void AAA등으로 쓰이는 여러곳에서 사용되는 util성 기능을 보아둔 클래스   
