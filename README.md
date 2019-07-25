@@ -31,24 +31,22 @@
 - Parameter
 Parameter개수가 많아서 줄바꿈이 필요한 경우, `,`다음부터 줄바꿈한다.    
 ```java
-public InputSingleTextView(Context context,      
-                           @RegisterStep String step,    
-                           String hint,    
-                           String validationMessage,    
-                           @NonNull CompleteListener completeListener) {      
-                           ...    
+public requestMovieInformation(@NonNull String movieTitle,
+                               int startPageNumber,    
+                               int endPageNumber,
+                               @NonNull OnMovieInformationListener listener) {      
+                               ...    
                            
 }     
 ```
 
 
-- 줄바꿈이 필요한 부분부터 줄바꿈 하지 않고 위의 예시처럼 1개 단위로 줄바꿈을 해준다. 호출코드에서도 동일.
+- 호출코드에서도 동일하게 줄바꿈이 필요한 부분부터 줄바꿈 하지 않고 위의 예시처럼 1개 단위로 줄바꿈을 해준다. 
 ```java
-new InputSingleTextView(this,    
-                        RegisterStep.XXX,    
-                        getString(R.string.xxx),    
-                        getString(R.string.xxx),    
-                        completeListener);
+requestMovieInformation("영화제목",
+                        1,
+                        2,
+                        onMovieInformationListener);
 ```
 - Operator
 많은 operator의 연산으로 줄바꿈이 필요한 경우, operator 전에 줄바꿈한다.    
@@ -76,13 +74,9 @@ ImageLoader.load(user.getProfileUrl())
 #### Annotation    
 외부에서 호출할 수 있는 public 함수에서는 항상 @NonNull / @Nullable 어노테이션을 추가해준다.    
 ```java
-public RegisterStepManager(@NonNull RegisterContract.View view,    
-                           @NonNull Activity activity,    
-                           @NonNull RegisterContract.Presenter presenter,    
-                           @NonNull ActivityRegisterBinding binding,    
-                           @NonNull String registerHashId) {    
-                           ...
-                           ...
+public attachView(@NonNull MainContract.View view) {    
+    ...
+    ...
 }     
 ```
     
@@ -91,14 +85,9 @@ public static void AAA등으로 쓰이는 여러곳에서 사용되는 util성 �
 aa.bb.cc.util 패키지에 모두 모아둔다.    
 예) DateFormatUtil, PixelUtil, BitmapUtil등   
 
-#### Manager    
-항상 내부에서 instance로 만들어서 관리되는 용도    
-내부적으로 state 혹은 information을 가지고 있어서 호출한곳에서의 상태에 따라서 관리되는 값을 변경하고 반영하는 작업을 해준다.    
-예) RegisterStepManager, RegisterCarInfoConfirmManager등    
-
 
 #### if문    
-if (isChecked == false) 와 같은 코드는 명백한 Lint warning이므로 사용하지 않는다.    
+if (isChecked == false) 와 같은 코드는 사용하지 않는다.
 if (isUnchekced)    
 조건문에 !를 넣는것대신 아래와 같은 규칙으로 코드를 작성한다.    
 조건문에서 체크되는 boolean 변수/함수는 항상 긍정문으로 작성한다. if(isChecked())    
@@ -113,18 +102,10 @@ fragment_	Fragment에서 쓰이는 layout
 dialog_	Dialog에서 쓰이는 layout    
 view_	CustomView에서 쓰이는 layout    
 item_	RecyclerView, GridView, ListView등에서 ViewHolder에 쓰이는 layout    
-layout_	<include/>로 재사용되는 공통의 layout    
 
 - 예시    
 `activity_main`: MainActivity의 layout    
-`fragment_request`: RequestFragment의 layout    
-`dialog_contact`: 문의안내 Dialog의 layout    
+`dialog_contact`: Dialog의 layout    
 `view_rating`: 커스텀으로 만든 RatingView의 layout    
-`item_my_car`: 내차량 목록에서 사용되는 각각의 item의 layout    
-`layout_dealer_review`: 재사용되는 딜러리뷰 layout    
+`item_movie_list`: 영화 목록 RecyclerView에서 사용되는 item의 layout    
 
-#### string
-`<WHERE>_<DESCRIPTION>`    
-- 예시    
-`activity_main_movie_title`: activity_main layout에서 사용되는 movie title text    
-`all_movie_title`: 다른 곳에서도 사용될 수 있는 movie title text
